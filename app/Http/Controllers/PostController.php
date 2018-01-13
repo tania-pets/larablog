@@ -1,7 +1,14 @@
 <?php
 /**
- * Post Controller Class
+ * @SWG\Swagger(
+ *   basePath="/api",
+ *   @SWG\Info(
+ *     title="Post Controller API",
+ *     version="1.0.0"
+ *   )
+ * )
  */
+
 
 namespace App\Http\Controllers;
 
@@ -14,6 +21,22 @@ use App\Tag;
 
 class PostController extends Controller
 {
+
+    /**
+     * @SWG\Get(
+     *     path="/posts",
+     *     tags={"Posts"},
+     *     summary="List posts",
+     *     @SWG\Response(
+     *          response=200,
+     *          description="List of posts",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="#/definitions/post")
+     *         )
+     *      )
+     * ),
+     */
     /**
      * Display a listing of the resource.
      * @param  \Illuminate\Http\Request  $request

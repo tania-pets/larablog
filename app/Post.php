@@ -1,8 +1,19 @@
 <?php
 /**
- * Post Model definition
- *
- */
+*     @SWG\Definition(
+*         definition="post",
+*         required={"title"},
+*         @SWG\Property(
+*             property="id",
+*             type="integer",
+*             readOnly=true
+*         ),
+*         @SWG\Property(
+*             property="title",
+*             type="string"
+*         )
+*     )
+*/
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
