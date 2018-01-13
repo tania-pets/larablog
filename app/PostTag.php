@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Post - Tag pivot Model definitions (used in seeder)
+ *
+ */
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;

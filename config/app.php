@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'admin_mail' => env('ADMIN_MAIL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -176,6 +178,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        L5Swagger\L5SwaggerServiceProvider::class,
 
     ],
 

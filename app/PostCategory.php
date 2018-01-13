@@ -1,4 +1,8 @@
 <?php
+/**
+ * Post Category Model definition
+ *
+ */
 
 namespace App;
 

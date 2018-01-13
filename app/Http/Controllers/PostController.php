@@ -1,4 +1,7 @@
 <?php
+/**
+ * Post Controller Class
+ */
 
 namespace App\Http\Controllers;
 
@@ -18,11 +21,8 @@ class PostController extends Controller
      */
     public function index(\Illuminate\Http\Request  $request)
     {
-        $dateOrder = $request->input('date_order');
-        $dateOrder = $dateOrder && in_array($dateOrder, ['asc', 'desc']) ? $dateOrder : 'desc';
-        $posts = Post::status($request->input('status'))->orderBy('created_at', $dateOrder)->with('author')->with('tags')->get();
+        $posts = Post::status($request->input('status'))->tags($request->input('tags'))->sortDate($request->input('date_order'))->with('author')->get();
         return PostResource::collection($posts);
-
     }
 
     /**
