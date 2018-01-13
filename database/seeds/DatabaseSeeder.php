@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\PostCategory;
 use App\Post;
+use App\Tag;
+use App\PostTag;
+
 use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
         $this->call(PostCategoriesSeeder::class);
+        $this->call(TagsSeeder::class);
         $this->call(PostsSeeder::class);
 
         Schema::enableForeignKeyConstraints();
@@ -53,7 +57,7 @@ class PostCategoriesSeeder extends Seeder
     public function run()
     {
         PostCategory::truncate();
-        $categories = ['Tech', 'Politics', 'Sports', 'Travel'];
+        $categories = ['Tech', 'Politics', 'Sports', 'Travel', 'Entertainment'];
         foreach($categories as $name) {
             factory(PostCategory::class, 1)->create(['name' => $name]);
         }
@@ -61,15 +65,39 @@ class PostCategoriesSeeder extends Seeder
 }
 
 
+class TagsSeeder extends Seeder
+{
+    /**
+     * Run the tags seeds.
+     * @return void
+     */
+    public function run()
+    {
+        PostTag::truncate();
+        Tag::truncate();
+        $tags = ['europe', 'money', 'music', 'events', 'media', 'news'];
+        foreach($tags as $tag) {
+            factory(Tag::class, 1)->create(['tag' => $tag]);
+        }
+    }
+}
+
 class PostsSeeder extends Seeder
 {
     /**
-     * Run the post categories seeds.
+     * Run the posts seeds.
      * @return void
      */
     public function run()
     {
         Post::truncate();
-        factory(Post::class, 10)->create(); //create  user with random data
+        factory(Post::class, 10)->create(); //create random posts
+
+        //attach Tags to posts
+        $posts = Post::all();
+        foreach ($posts as $post) {
+            $tags = Tag::where('id', '>', rand(0, 5))->get();
+            $post->tags()->saveMany($tags);
+        }
     }
 }

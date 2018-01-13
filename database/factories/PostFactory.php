@@ -9,6 +9,8 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'content' => $faker->realText(500),
         'category_id' => App\PostCategory::all()->random()->id,
         'user_id' => App\User::all()->random()->id,
-        'status' => 1
+        'created_at'=> $faker->dateTimeBetween($startDate = '-5 months', $endDate = 'now'),
+        'updated_at'=>  $faker->dateTimeBetween($startDate = '-4 months', $endDate = 'now'),
+        'status' => rand(0,1)
     ];
 });

@@ -16,12 +16,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/testDatabase', function() {
-    // App\User::create([
-    //     'email' => uniqid() . '@example.com',
-    //     'name' => 'Test User',
-    //     'password' => 'secret'
-    // ]);
+Route::get('/test', function() {
+    $post = App\Post::find(2);
+    echo $post->title.'<br/>';
+    dd($post->tags);
 
     return 'ol';
 });
