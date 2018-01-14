@@ -27,6 +27,21 @@ class PostController extends Controller
      *     path="/posts",
      *     tags={"Posts"},
      *     summary="List posts",
+     *     @SWG\Parameter(
+     *         description="Post status",
+     *         in="query",
+     *         name="status",
+     *         type="integer",
+     *         enum={0,1}
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Direction of created date sorting",
+     *         in="query",
+     *         name="date_order",
+     *         type="string",
+     *         default="desc",
+     *         enum={"asc","desc"}
+     *     ),
      *     @SWG\Response(
      *          response=200,
      *          description="List of posts",
@@ -142,7 +157,7 @@ class PostController extends Controller
     protected function validator($data) {
       return Validator::make($data, [
           'title' => 'required|min:3',
-          'intro' => 'required|min:3',
+          'intro' => 'sometimes|required|min:3',
           'content' => 'required|min:3',
           'category_id' => 'required|exists:post_categories,id',
           'status' => 'sometimes|required|in:0,1',

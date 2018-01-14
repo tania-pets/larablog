@@ -16,8 +16,8 @@ class Post extends Resource
     {
         return [
           'id' => $this->id,
-          'title' => $this->name,
-          'intro' => $this->email,
+          'title' => $this->title,
+          'intro' => $this->intro,
           'content' => $this->content,
           'category' => $this->category,
           'status' => $this->status,

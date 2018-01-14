@@ -2,7 +2,7 @@
 /**
 *     @SWG\Definition(
 *         definition="post",
-*         required={"title"},
+*         required={"title", "content", "category_id"},
 *         @SWG\Property(
 *             property="id",
 *             type="integer",
@@ -11,7 +11,42 @@
 *         @SWG\Property(
 *             property="title",
 *             type="string"
-*         )
+*         ),
+*         @SWG\Property(
+*             property="intro",
+*             type="string"
+*         ),
+*         @SWG\Property(
+*             property="content",
+*             type="string"
+*         ),
+*         @SWG\Property(
+*             property="category_id",
+*             type="integer"
+*         ),
+*         @SWG\Property(
+*             property="user_id",
+*             type="integer",
+*             readOnly=true
+*         ),
+*         @SWG\Property(
+*             property="status",
+*             type="integer",
+*         ),
+*         @SWG\Property(
+*             property="ordering",
+*             type="integer",
+*         ),
+*         @SWG\Property(
+*             property="slug",
+*             type="string",
+*             readOnly=true
+*         ),
+*         @SWG\Property(
+*             property="tags",
+*             type="array",
+*             @SWG\Items(ref="#/definitions/tag")
+*         ),
 *     )
 */
 namespace App;

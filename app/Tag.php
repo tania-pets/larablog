@@ -1,8 +1,19 @@
 <?php
 /**
- * Tag Model definition
- *
- */
+*     @SWG\Definition(
+*         definition="tag",
+*         required={"tag"},
+*         @SWG\Property(
+*             property="id",
+*             type="integer",
+*             readOnly=true
+*         ),
+*         @SWG\Property(
+*             property="tag",
+*             type="string"
+*         )
+*     )
+*/
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
