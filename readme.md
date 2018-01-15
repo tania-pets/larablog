@@ -18,10 +18,10 @@ You should now be able to see laravel's welcome page at http://localhost:8080/ a
 
 - Create database
 ```docker-compose exec app php artisan migrate```
-- Seed database with dummy data
-```docker-compose exec app php artisan db:seed```
 - Start listening the queue
 ```docker-compose exec app php artisan queue:work --tries=1```
+- Seed database with dummy data
+```docker-compose exec app php artisan db:seed```
 - Genarate Swagger API documentation
 ```docker-compose exec app php artisan l5-swagger:generate && docker-compose exec app php artisan l5-swagger:publish```
 
