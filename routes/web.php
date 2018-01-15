@@ -15,11 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/test', function() {
-    $post = App\Post::find(2);
-    echo $post->title.'<br/>';
-    dd($post->tags);
-
-    return 'ol';
-});
+Route::get('/maze', 'MazeController@index');
+Route::get('/maze-result', 'MazeController@showResult');
+Route::post('/maze-solve', "MazeController@solve");
