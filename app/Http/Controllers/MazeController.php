@@ -52,7 +52,8 @@ class MazeController extends Controller
 
     /**
      * Sets the private start, end params
-     *
+     * takes first opening on top and bottom
+     * @todo make if work for start/end all arround and not only top/bottom
      */
     private function setStartEnd($img) {
         $file = self::IMAGE_DIR . '/' . self::INPUT_FILE;
