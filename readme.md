@@ -14,7 +14,7 @@
 - Launch the docker app
 ```docker-compose up -d```
 
-You should now be able to see laravel's welcome page at http://localhost:8080/ and access docker's mysql with ```mysql -u homestead -P 3307 -h 127.0.0.1 -p```
+You should now be able to see laravel's welcome page at http://localhost:8080/ and access docker's mysql with ```mysql -u homestead -P 3307 -h 127.0.0.1 -p secret``` (pass: 'secret')
 
 - Create database
 ```docker-compose exec app php artisan migrate```
