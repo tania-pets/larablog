@@ -35,9 +35,12 @@ class MazeController extends Controller
         if (!$img) {
             return back()->with('message', 'The file must be a png image.');
         }
-        $this->setStartEnd($img);
-        $r =  $this->findPath($img, $this->start['x'], $this->start['y']);
-        return redirect('maze-result');
+        if (!$this->setStartEnd($img)) {
+            return redirect('/maze')->with('message', 'Wrong maze image. Use a rect maze.');
+        } else {
+            $r =  $this->findPath($img, $this->start['x'], $this->start['y']);
+            return redirect('maze-result');
+        }
     }
 
     /**
@@ -68,8 +71,13 @@ class MazeController extends Controller
                 break;
             }
         }
+        //wrong image
+        if (($start['x'] == 0 && $end['x'] == 0) ) {
+            return false;
+        }
         $this->start = $start;
         $this->end = $end;
+        return true;
     }
 
     /**
