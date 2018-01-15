@@ -13,7 +13,7 @@ class Post extends Resource
      * @return array
      */
     public function toArray($request)
-    {
+    {  
         return [
           'id' => $this->id,
           'title' => $this->title,
@@ -25,8 +25,8 @@ class Post extends Resource
           'ordering' => $this->ordering,
           'slug' => $this->slug,
           'tags' => $this->tags,
-          'created_at' => $this->created_at,
-          'updated_at' => $this->updated_at,
+          'created_at' => $this->created_at->format('Y-m-d h:i:s'),
+          'updated_at' => $this->updated_at->format('Y-m-d h:i:s'),
       ];
 
 

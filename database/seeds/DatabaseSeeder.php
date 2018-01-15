@@ -96,7 +96,7 @@ class PostsSeeder extends Seeder
         //attach Tags to posts
         $posts = Post::all();
         foreach ($posts as $post) {
-            $tags = Tag::where('id', '>', rand(0, 2))->get();
+            $tags = Tag::where('id', '>', rand(0, 6))->take(rand(0,3))->get();
             $post->tags()->saveMany($tags);
         }
     }

@@ -2,15 +2,22 @@
 /**
 *     @SWG\Definition(
 *         definition="tag",
-*         required={"tag"},
 *         @SWG\Property(
 *             property="id",
-*             type="integer",
-*             readOnly=true
+*             type="integer"
 *         ),
 *         @SWG\Property(
 *             property="tag",
 *             type="string"
+*         )
+*     )
+*     @SWG\Definition(
+*         definition="addtag",
+*         required={"title"},
+*         @SWG\Property(
+*             property="tag",
+*             type="string",
+*             example="weather"
 *         )
 *     )
 */
@@ -29,6 +36,9 @@ class Tag extends Model
 
     protected $hidden = ['pivot'];
 
+    /**
+     * Get post's of with the tags
+     */
     public function posts()
     {
         return $this->belongsToMany('App\Post');

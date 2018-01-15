@@ -1,8 +1,21 @@
 <?php
 /**
- * User Model definition
- *
- */
+*     @SWG\Definition(
+*         definition="author",
+*         @SWG\Property(
+*             property="id",
+*             type="integer"
+*         ),
+*         @SWG\Property(
+*             property="name",
+*              type="string"
+*         ),
+*         @SWG\Property(
+*             property="email",
+*              type="string"
+*         ),
+*     )
+*/
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -29,7 +42,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'created_at', 'updated_at'
     ];
-
 
 
     public function posts()

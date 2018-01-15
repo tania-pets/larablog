@@ -1,13 +1,4 @@
 <?php
-/**
- * @SWG\Swagger(
- *   basePath="/api",
- *   @SWG\Info(
- *     title="Post Controller API",
- *     version="1.0.0"
- *   )
- * )
- */
 
 
 namespace App\Http\Controllers;
@@ -42,6 +33,12 @@ class PostController extends Controller
      *         default="desc",
      *         enum={"asc","desc"}
      *     ),
+     *     @SWG\Parameter(
+     *         description="Tags, comma separated if many (e.g media,news)",
+     *         in="query",
+     *         name="tags",
+     *         type="string"
+     *     ),
      *     @SWG\Response(
      *          response=200,
      *          description="List of posts",
@@ -73,6 +70,33 @@ class PostController extends Controller
         //
     }
 
+
+    /**
+     * @SWG\Post(
+     *     path="/posts",
+     *     operationId="addPost",
+     *     tags={"Posts"},
+     *     description="Adds a new end post in database",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         required=true,
+     *         @SWG\Schema(ref="#/definitions/addpost")
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Returns created post object",
+     *         @SWG\Schema(ref="#/definitions/post")
+     *     ),
+     *     @SWG\Response(
+     *         response="422",
+     *         description="Unprocessable Entity - Validation errors",
+     *         @SWG\Schema(ref="#/definitions/Error")
+     *     )
+     * )
+     * )
+     */
     /**
      * Store a newly created resource in storage.
      *
@@ -82,10 +106,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $validator = $this->validator($data);
+        $validator = $this->validator($data, 'post');
         if ($validator->fails()){
             $errors = $validator->errors();
-            return $errors->toJson();
+            return response()->json([
+                'message' => $errors
+            ], 422);
         }
         $userId = User::all()->random()->id;
         $data = array_merge($data, ['user_id' => $userId]);
@@ -98,6 +124,32 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
+
+    /**
+    * @SWG\Get(
+    *     path="/posts/{id}",
+    *     @SWG\Parameter(
+    *         description="ID of post to get",
+    *         in="path",
+    *         name="id",
+    *         required=true,
+    *         type="integer"
+    *     ),
+    *     operationId="getpost",
+    *     tags={"Posts"},
+    *     description="Fetches a post",
+    *     produces={"application/json"},
+    *     @SWG\Response(
+    *         response=200,
+    *         description="Post response",
+    *         @SWG\Schema(ref="#/definitions/post")
+    *     ),
+    *     @SWG\Response(
+    *         response="404",
+    *         description="Not found",
+    *     )
+    *     )
+    */
     /**
      * Display the specified resource.
      *
@@ -120,6 +172,39 @@ class PostController extends Controller
         //
     }
 
+
+    /**
+      *@SWG\Put(
+      *     path="/posts/{id}",
+      *     @SWG\Parameter(
+      *         description="ID of post to update",
+      *         in="path",
+      *         name="id",
+      *         required=true,
+      *         type="integer"
+      *     ),
+      *     operationId="editpost",
+      *     tags={"Posts"},
+      *     description="Edits a post",
+      *     produces={"application/json"},
+      *     @SWG\Parameter(
+      *         name="body",
+      *         in="body",
+      *         required=true,
+      *         @SWG\Schema(ref="#/definitions/editpost")
+      *     ),
+      *     @SWG\Response(
+      *         response=200,
+      *         description="Updated Post response",
+      *         @SWG\Schema(ref="#/definitions/post")
+      *     ),
+      *     @SWG\Response(
+      *         response="422",
+      *         description="Validation errors",
+      *         @SWG\Schema(ref="#/definitions/Error")
+      *     )
+      * )
+      */
     /**
      * Update the specified resource in storage.
      *
@@ -130,7 +215,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
-        $validator = $this->validator($data);
+        $validator = $this->validator($data, 'edit');
         if ($validator->fails()){
             $errors = $validator->errors();
             return $errors->toJson();
@@ -144,6 +229,31 @@ class PostController extends Controller
     }
 
     /**
+     *
+     * 	@SWG\Delete(
+     * 		path="/posts/{id}",
+     * 		tags={"Posts"},
+     * 		operationId="deletePost",
+     * 		summary="Remove post entry",
+     * 		@SWG\Parameter(
+     * 			name="id",
+     * 			in="path",
+     * 			required=true,
+     * 			type="integer",
+     * 			description="Id of the post to delete",
+     * 		),
+     * 		@SWG\Response(
+     * 			response=200,
+     * 			description="success",
+     * 		),
+     * 		@SWG\Response(
+     * 			response="404",
+     * 			description="Not found"
+     * 		),
+     * 	)
+     *
+     */
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Post  $post
@@ -154,14 +264,17 @@ class PostController extends Controller
         $post->delete();
     }
 
-    protected function validator($data) {
+    protected function validator($data, $action) {
+      $required = $action == 'post' ? 'required' : 'sometimes';
       return Validator::make($data, [
-          'title' => 'required|min:3',
+          'title' => $required . '|min:3',
           'intro' => 'sometimes|required|min:3',
-          'content' => 'required|min:3',
-          'category_id' => 'required|exists:post_categories,id',
+          'content' => $required . '|min:3',
+          'category_id' => $required . '|exists:post_categories,id',
           'status' => 'sometimes|required|in:0,1',
           'ordering' => 'sometimes|required|integer'
       ]);
     }
+
+
 }

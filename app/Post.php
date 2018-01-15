@@ -2,11 +2,9 @@
 /**
 *     @SWG\Definition(
 *         definition="post",
-*         required={"title", "content", "category_id"},
 *         @SWG\Property(
 *             property="id",
-*             type="integer",
-*             readOnly=true
+*             type="integer"
 *         ),
 *         @SWG\Property(
 *             property="title",
@@ -21,13 +19,12 @@
 *             type="string"
 *         ),
 *         @SWG\Property(
-*             property="category_id",
-*             type="integer"
+*             property="category",
+*             ref= "#/definitions/category"
 *         ),
 *         @SWG\Property(
-*             property="user_id",
-*             type="integer",
-*             readOnly=true
+*             property="author",
+*             ref= "#/definitions/author"
 *         ),
 *         @SWG\Property(
 *             property="status",
@@ -39,14 +36,100 @@
 *         ),
 *         @SWG\Property(
 *             property="slug",
-*             type="string",
-*             readOnly=true
+*             type="string"
 *         ),
 *         @SWG\Property(
 *             property="tags",
 *             type="array",
 *             @SWG\Items(ref="#/definitions/tag")
 *         ),
+*         @SWG\Property(
+*             property="created_at",
+*              type="string",
+*              format="Y-m-d h:i:s"
+*         ),
+*         @SWG\Property(
+*             property="updated_at",
+*              type="string",
+*              format="Y-m-d h:i:s"
+*         )
+*     )
+
+*     @SWG\Definition(
+*         definition="addpost",
+*         required={"title", "content", "category_id"},
+*         @SWG\Property(
+*             property="title",
+*             type="string",
+*             example="Good news"
+*         ),
+*         @SWG\Property(
+*             property="intro",
+*             type="string",
+*             example="Read the news below"
+*         ),
+*         @SWG\Property(
+*             property="content",
+*             type="string"
+*         ),
+*         @SWG\Property(
+*             property="category_id",
+*             type="integer",
+*             example="1"
+*         ),
+*         @SWG\Property(
+*             property="status",
+*             type="integer",
+*             enum={0,1}
+*         ),
+*         @SWG\Property(
+*             property="ordering",
+*             type="integer",
+*             example=1
+*         ),
+*         @SWG\Property(
+*             property="tags",
+*             type="string",
+*             example="weather,money"
+*         )
+*     )
+
+*     @SWG\Definition(
+*         definition="editpost",
+*         @SWG\Property(
+*             property="title",
+*             type="string",
+*             example="Good news"
+*         ),
+*         @SWG\Property(
+*             property="intro",
+*             type="string",
+*             example="Read the news below"
+*         ),
+*         @SWG\Property(
+*             property="content",
+*             type="string"
+*         ),
+*         @SWG\Property(
+*             property="category_id",
+*             type="integer",
+*             example="1"
+*         ),
+*         @SWG\Property(
+*             property="status",
+*             type="integer",
+*             enum={0,1}
+*         ),
+*         @SWG\Property(
+*             property="ordering",
+*             type="integer",
+*             example=1
+*         ),
+*         @SWG\Property(
+*             property="tags",
+*             type="string",
+*             example="weather,money"
+*         )
 *     )
 */
 namespace App;
@@ -138,6 +221,12 @@ class Post extends Model
         return $query->orderBy('created_at', $sortDir);
     }
 
+
+    /**
+     * Sync the tags posted in post's create/update
+     * @param string $tags, tags comma separeted
+     * @return    \App\Post, this post
+     */
     public function syncTags($tags) {
       $tags = explode(',', $tags);
       $tagIds = [];

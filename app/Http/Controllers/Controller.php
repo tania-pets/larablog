@@ -1,5 +1,27 @@
 <?php
 
+/**
+* @SWG\Swagger(
+*     schemes={"http"},
+*     basePath="/api",
+* 		produces={"application/json"},
+* 		consumes={"application/json"},
+*     @SWG\Info(
+*         version="1.0.0",
+*         title="Blog API",
+*         description="Api specification",
+*         termsOfService="",
+*         @SWG\Contact(
+*             email="tania.pets@gmail.com"
+*         )
+*     ))
+*    @SWG\Definition(
+*       definition="Error",
+*       @SWG\Property(property="message", type="string"),
+*       ),
+*/
+
+
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
