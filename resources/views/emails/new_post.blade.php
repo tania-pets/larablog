@@ -1,8 +1,4 @@
 Hi there!
 <br/>
 
-A new blog post has been added.
-
-<br/>
-
-Here it is:  <a href="{{$mailData['link']}}"> {{$mailData['title']}}</a>
+A new blog post has been added with title: <b>{{$mailData['title']}}</b>

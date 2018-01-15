@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
         //send email to admin after post creation - Queue it to avoid delay
         Post::created(function ($post) {
+            //link removed from email because docker's port is not set by url()
             $mailData = ['link' => url('api/posts/' . $post->id), 'title' => $post->title];
             Mail::to(Config::get('app.admin_mail'))->queue(new EmailNewPostNotify($mailData));
         });
