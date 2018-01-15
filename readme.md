@@ -20,7 +20,12 @@ You should now be able to see laravel's welcome page at http://localhost:8080/ a
 ```docker-compose exec app php artisan migrate```
 - Seed database with dummy data
 ```docker-compose exec app php artisan db:seed```
+- Start listening the queue
+```docker-compose exec app php artisan queue:work --tries=1```
 - Genarate Swagger API documentation
 ```docker-compose exec app php artisan l5-swagger:generate && docker-compose exec app php artisan l5-swagger:publish```
 
 You should be able to view API's documentation and test here: http://localhost:8080/api/documentation
+
+
+** NOTE: Uses port 8080 for apache and 3307 for mysql. If ports not available,  modify them in docker-compose.yml
